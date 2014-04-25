@@ -2,21 +2,20 @@ Ideen:
 	- Initialisieren eines Chats
 		- Hochladen der von WAPP exportierten txt
 			- Optional direkt durch E-Mail an meinen Server
-		- Eingabe eines Chatnamens oder HandyNummer
+		- Eingabe einer Bezeichnung für den Chat
 			- ohne Namen wird Name aus der txt gelesen
-			- Kontaktbuchnamen ODER telefonnummern
-		- Eingabe des eigenen Namens
+		- Eingabe des eigenen Namens oder Handynummer (ist öffentlich)
 		- Setzen eines Passwortes (Optional)
 		
 	- Speichern in Datenbank 1: 
 		- Chat Name
-		- Ersteller
+		- Ersteller (Name oder Nummer)
 		- Passwort (optional)
 		- Datum
 		- Anzahl aller Nachrichten
 		- Durchschnittliche Länge aller Nachrichten
 		- Chattende Personen und Highscores
-			- Nickname der Person
+			- Nickname oder Nummer der Person
 			- Anzahl der Nachrichten
 			- Durchschnittliche Länge der Nachricht
 		- Geteilte Bilder (optional)
@@ -31,7 +30,7 @@ Ideen:
 	- Anzeigen der ausgewerteten Daten
 		- Startseite zeigt Liste aller Hochgeladenen Chats
 		- Angeklickter Chat wird angezeigt nach Eingabe von
-			- Name
+			- Name oder Nummer
 			- E-Mail
 			- Passwort (Optional)
 			- Captcha Code
