@@ -2,8 +2,9 @@ Ideen:
 	- Initialisieren eines Chats
 		- Hochladen der von WAPP exportierten txt
 			- Optional direkt durch E-Mail an meinen Server
-		- Eingabe eines Chatnamens 
+		- Eingabe eines Chatnamens oder HandyNummer
 			- ohne Namen wird Name aus der txt gelesen
+			- Kontaktbuchnamen ODER telefonnummern
 		- Eingabe des eigenen Namens
 		- Setzen eines Passwortes (Optional)
 		
@@ -14,7 +15,7 @@ Ideen:
 		- Datum
 		- Anzahl aller Nachrichten
 		- Durchschnittliche Länge aller Nachrichten
-		- Chattende Personen und Higscores
+		- Chattende Personen und Highscores
 			- Nickname der Person
 			- Anzahl der Nachrichten
 			- Durchschnittliche Länge der Nachricht
@@ -50,3 +51,7 @@ Ideen:
 				- Volltext-Suche
 				- Personen
 				- Tag/Woche/Monat/Jahr
+				
+	- Nachrichtenformat umwandeln
+		- Datum/Uhrzeit/User:/Text
+		- Zeilenumbrüche beachten
