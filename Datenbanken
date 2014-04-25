@@ -1,31 +1,30 @@
-+---------------------------------------------------------------------------+
-|								DB 1: Chats									|
-+-----------+-----------------------------------+---------------------------+
-|ID			|Int(5) Auto-Increment, Primary Key	|							|
-|name		|Varchar(10)						|Chatname					|
-|created_by	|Varchar(50)						|Creatorname				|
-|password	|Varchar(50)						|Md5						|
-|created	|timestamp							|creationdate				|
-|messages	|int								|Message count				|
-|average	|int								|Durchschn. länge			|
-|user		|text								|::Personen:count:average::	|
-+-----------+-----------------------------------+---------------------------+
++ ------------------------------------------------------------------------------ +
+|                               DB 1: Chats                                      |
++ ---------- + ------------------------------------ + -------------------------- +
+| ID         | Int(5) Auto - Increment, Primary Key |                            |
+| name       | Varchar(10)                          | Chatname                   |
+| created_by | Varchar(50)                          | Creatorname                |
+| password   | Varchar(50)                          | Md5                        |
+| created    | timestamp                            | creationdate               |
+| messages   | int                                  | Message count              |
+| average    | int                                  | Durchschn.länge            |
+| user       | text                                 | ::Personen:count:average:: |
++ ---------- + ------------------------------------ + -------------------------- +
 
-+---------------------------------------------------------------+
-|							DB 2: Backups						|
-+-----------+-------------------------------+-------------------+
-|Chat_ID 	|Int(5), Foreign Key(Chats.ID)	|Verknüpfter chat 	|
-|uploader	|Varchar(50)					|Uploader name		|
-|uploadet	|timestamp						|datum				|
-|data		|text							|Raw Text			|
-+-----------+-------------------------------+-------------------+
++ ----------------------------------------------------------- +
+|                       DB 2: Backups                         |
++ -------- + ----------------------------- + ---------------- +
+| chat_ID  | Int(5), Foreign Key(Chats.ID) | Verknüpfter chat |
+| uploader | Varchar(50)                   | Uploader name    |
+| uploadet | timestamp                     | datum            |
+| data     | text                          | Raw Text         |
++ -------- + ----------------------------- + ---------------- +
 
-+-------------------------------------------------------------------+
-|								DB 1: Chats							|
-+-----------+-----------------------------------+-------------------+
-|ID			|Int(5) Auto-Increment, Primary Key	|					|
-|Chat_ID	|Int(5), Foreign Key(Chats.ID)		|Verknüpfter chat	|
-|uploadet	|timestamp							|datum				|
-|path		|Varchar(100)						|bildpfad			|
-+-----------+-----------------------------------+-------------------+
-
++ ------------------------------------------------------------------ +
+|                                DB 1: Chats                         |
++ -------- + ------------------------------------ + ---------------- +
+| ID       | Int(5) Auto - Increment, Primary Key |                  |
+| Chat_ID  | Int(5), Foreign Key(Chats.ID)        | Verknüpfter chat |
+| uploadet | timestamp                            | datum            |
+| path     | Varchar(100)                         | bildpfad         |
++ -------- + ------------------------------------ + ---------------- +
