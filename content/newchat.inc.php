@@ -22,47 +22,58 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */ ?>
 <?php
+if ($handle = opendir('txts')) {
+    while (false !== ($file = readdir($handle))) {
+        if ($file != "." && $file != "..") {
+            echo "<a href='newchat.php?file=$file'>$file<a><br />";
+        }
+    }
+    closedir($handle);
+}
+
 if ($_FILES['chatfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['chatfile']['tmp_name'])) { //checks that file is uploaded
-	$path = "txts/".$picture['chatfile']['name'];
+	$path = "txts/".$_FILES['chatfile']['name'];
+	echo $path;
 	if (!file_exists($path)){
-		if (!move_uploaded_file($picture['chatfile']['tmp_name'], $path)){
+		if (!move_uploaded_file($_FILES['chatfile']['tmp_name'], $path)){
 		    die('Datei wurde nicht Erfolgreich hochgeladen');
 		}
 	}else{
 		echo "Datei vorhanden: <br />";
 	}
-	
 }
 
-
-$handle = @fopen("txts/WhatsApp_Chat_ Easter_Rave_2015.txt", "r"); //read line one by one
-$data = array();
-    $i = 0;
-while (!feof($handle)) // Loop til end of file.
-{
-    $string = fgets($handle, 4096); // Read a line.
-
-    if(strpos($string,": ")!==false){
-    	$buffer = explode(": ", $string);
-	    $datetime = explode(" ", $buffer[0]);
-	    $data[$i]["date"] = $datetime[0];
-	    $data[$i]["time"] = $datetime[1];
-	    unset($datetime);
-	    unset($buffer[0]);
-	    $data[$i]["name"] = $buffer[1];
-		unset($buffer[1]);
-		$buffer = implode(": ", $buffer);
-	    $data[$i]["message"] = $buffer;
-	    $i++;
-    }
+if(isset($_REQUEST["file"])){
+	echo $_REQUEST["file"];
+	$handle = @fopen("txts/".$_REQUEST["file"], "r"); //read line one by one
+	$data = array();
+	    $i = 0;
+	while (!feof($handle)) // Loop til end of file.
+	{
+	    $string = fgets($handle, 4096); // Read a line.
+	    if(strpos($string,": ")!==false){
+	    	$buffer = explode(": ", $string);
+		    $datetime = explode(" ", $buffer[0]);
+		    $data[$i]["date"] = $datetime[0];
+		    $data[$i]["time"] = $datetime[1];
+		    unset($datetime);
+		    unset($buffer[0]);
+		    $data[$i]["name"] = $buffer[1];
+			unset($buffer[1]);
+			$buffer = implode(": ", $buffer);
+		    $data[$i]["message"] = $buffer;
+		    $i++;
+	    }
+	}
+	?>
+	<table border="1">
+	<tr><th>am</th><th>um</th><th>wer</th><th>was</th></tr>
+	<?php
+	foreach($data as $line){
+		echo "<tr><td>".$line["date"]."</td><td>".$line["time"]."</td><td>".$line["name"]."</td><td>".$line["message"]."</td><tr>";
+	}
 }
-?>
-<table border="1">
-<tr><th>am</th><th>um</th><th>wer</th><th>was</th></tr>
-<?php
-foreach($data as $line){
-	echo "<tr><td>".$line["date"]."</td><td>".$line["time"]."</td><td>".$line["name"]."</td><td>".$line["message"]." !</td><tr>";
-}
+
 ?>
 </table>
 <form action="newchat.php" method="POST" enctype="multipart/form-data" id="newchat">
