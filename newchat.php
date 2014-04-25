@@ -21,4 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */ ?>
-Klicke <a href="newchat.php">hier</a> um einen Chat einzulesen.
+<?php include("head.php"); ?>
+<?php $_name="newchat";?>
+<?php include("wrapper.php"); ?>
