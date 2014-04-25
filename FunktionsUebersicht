@@ -1,0 +1,52 @@
+Ideen: 
+	- Initialisieren eines Chats
+		- Hochladen der von WAPP exportierten txt
+			- Optional direkt durch E-Mail an meinen Server
+		- Eingabe eines Chatnamens 
+			- ohne Namen wird Name aus der txt gelesen
+		- Eingabe des eigenen Namens
+		- Setzen eines Passwortes (Optional)
+		
+	- Speichern in Datenbank 1: 
+		- Chat Name
+		- Ersteller
+		- Passwort (optional)
+		- Datum
+		- Anzahl aller Nachrichten
+		- Durchschnittliche Länge aller Nachrichten
+		- Chattende Personen und Higscores
+			- Nickname der Person
+			- Anzahl der Nachrichten
+			- Durchschnittliche Länge der Nachricht
+		- Geteilte Bilder (optional)
+			
+	- Speichern in Datenbank 2
+		- Gesamten Chatverlauf
+		- Inkrementelles Backup
+			- Durch Vergleich: Hochgeladen -> Vorhanden
+		- Name des Uploaders
+		- Datum des Uploads
+
+	- Anzeigen der ausgewerteten Daten
+		- Startseite zeigt Liste aller Hochgeladenen Chats
+		- Angeklickter Chat wird angezeigt nach Eingabe von
+			- Name
+			- E-Mail
+			- Passwort (Optional)
+			- Captcha Code
+		- Design siehe Wireframes (folgen)
+		- Angezeigt wird pro Chat
+			- Liste mit allen Mitgliedern
+				- In unterschiedlichen Farben
+				- Nachrichtenanzahl dahinter
+				- Sortiert nach Menge der Nachrichten
+				- Top 5 anzeigen, rest ausklappen
+			- Der Chat 
+				- Ansicht ähnlich Whatsapp
+				- Mitglieder in ihren Farben
+				- Datum/Zeit
+				- Gruppiert in Tage/Wochen/Jahre
+			- Suchfunktion
+				- Volltext-Suche
+				- Personen
+				- Tag/Woche/Monat/Jahr
