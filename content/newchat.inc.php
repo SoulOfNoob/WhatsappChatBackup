@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */ ?>
 <?php
+date_default_timezone_set("Europe/Berlin");
 if ($handle = opendir('txts')) {
     while (false !== ($file = readdir($handle))) {
         if ($file != "." && $file != "..") {
@@ -50,11 +51,12 @@ if(isset($_REQUEST["file"])){
 	    $i = 0;
 	while (!feof($handle)) // Loop til end of file.
 	{
-	    $string = fgets($handle, 4096); // Read a line.
-	    if(strpos($string,": ")!==false){
-	    	$buffer = explode(": ", $string);
+	    $line = fgets($handle, 4096); // Read a line.
+	    $checkline = mb_substr($line, 0, 17);
+	    if (strtotime($checkline)){
+	    	$buffer = explode(": ", $line);
 		    $datetime = explode(" ", $buffer[0]);
-		    $data[$i]["date"] = $datetime[0];
+	    	$data[$i]["date"] = $datetime[0];
 		    $data[$i]["time"] = $datetime[1];
 		    unset($datetime);
 		    unset($buffer[0]);
@@ -63,19 +65,47 @@ if(isset($_REQUEST["file"])){
 			$buffer = implode(": ", $buffer);
 		    $data[$i]["message"] = $buffer;
 		    $i++;
+	    }else{
+	    	$data[$i]["message"] = $line;
 	    }
+	    
 	}
-	?>
-	<table border="1">
-	<tr><th>am</th><th>um</th><th>wer</th><th>was</th></tr>
-	<?php
+	$names = array();
+	$count = array();
+	$beigetreten = array();
+	$verlassen = array();
+	$entfernt = array();
+	$tablestring = "<table border=\"1\">";
+	$tablestring.= "<tr><th>am</th><th>um</th><th>wer</th><th>was</th></tr>";
 	foreach($data as $line){
-		echo "<tr><td>".$line["date"]."</td><td>".$line["time"]."</td><td>".$line["name"]."</td><td>".$line["message"]."</td><tr>";
+		if (strpos($line["name"], "beigetreten")!==false){
+			$beigetreten[] = $line["name"];
+		}elseif (strpos($line["name"], "Gruppe verlassen")!==false){
+			$verlassen[] = $line["name"];
+		}elseif (strpos($line["name"], "‬entfernt")!==false){
+			$entfernt[] = $line["name"];
+		}elseif (strpos($line["name"], "‬Gruppenbild")!==false){
+			$bildaenderung[] = $line["name"];
+		}else{
+			$tablestring.= "<tr><td>".$line["date"]."</td><td>".$line["time"]."</td><td>".$line["name"]."</td><td>".$line["message"]."</td><tr>";
+			if(!in_array ($line["name"], $names)){
+				$names[] = $line["name"];
+				$count[$line["name"]] = 1;
+			}elseif(in_array ($line["name"], $names)){
+				$count[$line["name"]] = $count[$line["name"]] + 1;
+			}
+		}
 	}
+	$tablestring.= "</table>";
+	echo "Names: ";
+	print_r($names);
+	echo "<br /><br />Count: ";
+	print_r($count);
+	echo $tablestring;
 }
 
 ?>
-</table>
+
 <form action="newchat.php" method="POST" enctype="multipart/form-data" id="newchat">
 	<label for="chatname">Unter welchem Namen soll der Chat gespeichert werden: </label>
         <input name="chatname" type="text">

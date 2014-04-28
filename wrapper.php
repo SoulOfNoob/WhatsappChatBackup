@@ -23,7 +23,7 @@ SOFTWARE.
 */ ?>
 	<body>
 		<div id="head">
-			<a href="https://github.com/SoulOfNoob/WhatsappChatBackup">https://github.com/SoulOfNoob/WhatsappChatBackup</a><br />
+			<a href="https://github.com/SoulOfNoob/WhatsappChatBackup">https://github.com/SoulOfNoob/WhatsappChatBackup</a><br /><br />
 		</div> <!-- Head -->
 		<div id="content">
 		    <?php include("content/".$_name.".inc.php"); ?>	
