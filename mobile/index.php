@@ -27,22 +27,42 @@
     <title>WhatsappChatBackup</title>
 </head>
 <body>
+	<?php
+		if (isset($_REQUEST["chat"])){
+			echo "<script>var filename = '".$_REQUEST["chat"]."';</script>";
+		}else{
+			echo "<script>var filename = false;</script>";
+		}
+	?>
     <script>
+		function getTable(filename) {
+       		var chat = "fehler";
+			console.log("filename: "+filename);
+			$.ajax({
+				url: "process.php",
+				data: { file: filename },
+				type: "GET",
+				success: function(response) { chat = response; }
+			}).done(function() {					
+				var table = '';
+				table = table+'<table data-role="table" id="chattable" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">';
+				table = table+chat;
+				table = table+'</table>';
+				console.log(table);
+				$("#chattable").html("");
+				$("#chattable").html(table);
+				$("#chattable").trigger("create");
+				$.mobile.navigate( "#view" );
+			});
+        }
         $( document ).ready(function() {
- 			var chat = "fehler";
-            $("#callAjax").click(function() {
-           		var filename = $("#filename").val();
- 				console.log("filename: "+filename);
-				$.ajax({
-				  url: "process.php",
-				  data: { file: filename },
-				  type: "GET",
-				  success: function(response) { chat = response; }
-				}).done(function() {					
-					$("#chattable").html(chat);
-					$.mobile.navigate( "#view" );
-				});
-            });
+        	if(filename !== false){
+        		getTable(filename);
+        	}
+        	$("#callAjax").click( function(){
+        		var filename = $("#filename").val();
+        		getTable(filename);
+        	});
         });
     </script>
 <!-- Start of first page -->
@@ -150,7 +170,7 @@
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content">
-		<p><a href="#overwiev" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-b">Zurück zur Übersicht</a></p>
+		<p><a href="#overview" class="ui-btn ui-shadow ui-corner-all ui-btn-b">Zurück zur Übersicht</a></p>
 		<p><a href="#start" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-b">Zurück zur Startseite</a></p>
 		<div id="chattable"></div>
 	</div><!-- /content -->

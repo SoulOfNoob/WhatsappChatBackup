@@ -13,9 +13,9 @@ if(isset($_REQUEST["file"])){
 	    if (DateTime::createFromFormat('d.m.Y G:i:s', $checkline) !== FALSE){
 	    	$i++;
 	    	$buffer = explode(": ", $line);
-		    $datetime = explode(" ", $buffer[0]);
-	    	$data[$i]["date"] = $datetime[0];
-		    $data[$i]["time"] = $datetime[1];
+		    //################################## timesplit
+		    $data[$i]["datetime"] = DateTime::createFromFormat('d.m.Y G:i:s', $checkline);
+			//################################## timesplit
 		    unset($datetime);
 		    unset($buffer[0]);
 		    $data[$i]["name"] = $buffer[1];
@@ -36,8 +36,8 @@ if(isset($_REQUEST["file"])){
 	$beigetreten = array();
 	$verlassen = array();
 	$entfernt = array();
-	$tablestring = '<table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">';
-	$tablestring.= '<thead> <tr class="ui-bar-d"> <th data-priority="1">Datum</th> <th data-priority="1">Zeit</th> <th data-priority="1">Verfasser</th> <th data-priority="1">Nachricht</abbr></th> </tr> </thead>';
+	//$tablestring = '<table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">';
+	$tablestring.= '<thead> <tr class="ui-bar-d"> <th data-priority="2">Datum</th> <th data-priority="1">Zeit</th> <th data-priority="1">Verfasser</th> <th data-priority="1">Nachricht</abbr></th> </tr> </thead>';
 	$tablestring.= '<tbody>';
 	foreach($data as $line){
 		if (strpos($line["name"], "beigetreten")!==false){
@@ -49,10 +49,10 @@ if(isset($_REQUEST["file"])){
 		}elseif (strpos($line["name"], "‬Gruppenbild")!==false){
 			$bildaenderung[] = $line["name"];
 		}else{
-			$tablestring.= "<tr><td>".$line["date"]."</td><td>".$line["time"]."</td><td>".$line["name"]."</td><td>".$line["message"]."</td><tr>";
+			$tablestring.= "<tr class=\"custom_row\"><td>".$data[4]["datetime"]->format('d.m')."</td><td>".$data[4]["datetime"]->format('H:i')."</td><td nowrap>".$line["name"]."</td><td>".$line["message"]."</td><tr>";
 		}
 	}
-	$tablestring.= "</tbody></table>";
+	$tablestring.= "</tbody>";
 
 	echo $tablestring;
 }
