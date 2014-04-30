@@ -45,19 +45,15 @@ if ($_FILES['chatfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['c
 }
 
 if(isset($_REQUEST["file"])){
-	//echo $_REQUEST["file"];
+	echo $_REQUEST["file"];
 	$handle = @fopen("txts/".$_REQUEST["file"], "r"); //read line one by one
 	$data = array();
 	    $i = 0;
-	    $linecount = 0;
 	while (!feof($handle)) // Loop til end of file.
 	{
-		$linecount++;
 	    $line = fgets($handle, 4096); // Read a line.
 	    $checkline = mb_substr($line, 0, 17);
-	    if (DateTime::createFromFormat('d.m.Y G:i:s', $checkline) !== FALSE){
-	    	$i++;
-	    	//echo "success parsing time: '".$checkline."' at line: '".$linecount."' in line: ".$i."<br />";
+	    if (strtotime($checkline)){
 	    	$buffer = explode(": ", $line);
 		    $datetime = explode(" ", $buffer[0]);
 	    	$data[$i]["date"] = $datetime[0];
@@ -68,11 +64,9 @@ if(isset($_REQUEST["file"])){
 			unset($buffer[1]);
 			$buffer = implode(": ", $buffer);
 		    $data[$i]["message"] = $buffer;
+		    $i++;
 	    }else{
-	    	//echo "failed to Parse time: '".$checkline."' at line: '".$linecount."'<br />";
-	    	$data[$i]["message"].= "<br />".$line;
-	    	//echo "writing '".$line."' in '".$i."'<br />";
-	    	//echo "line '".$i."' is now: '".$data[$i]["message"]."'<br />";
+	    	$data[$i]["message"].= $line;
 	    }
 	    
 	}
@@ -103,10 +97,10 @@ if(isset($_REQUEST["file"])){
 		}
 	}
 	$tablestring.= "</table>";
-	//echo "Names: ";
-	//print_r($names);
-	//echo "<br /><br />Count: ";
-	//print_r($count);
+	echo "Names: ";
+	print_r($names);
+	echo "<br /><br />Count: ";
+	print_r($count);
 	echo $tablestring;
 }
 
