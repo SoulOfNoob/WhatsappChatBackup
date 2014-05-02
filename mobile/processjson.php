@@ -6,6 +6,7 @@ $beigetreten = array();
 $verlassen = array();
 $entfernt = array();
 $bildaenderung = array();
+$betreffaenderung = array();
 if(isset($_REQUEST["file"])){
 	$handle = @fopen("txts/".$_REQUEST["file"], "r"); //read line one by one
 	$data = array();
@@ -28,6 +29,8 @@ if(isset($_REQUEST["file"])){
 				$entfernt[] = $data[$i]["name"];
 			}elseif (strpos($data[$i]["name"], "‬Gruppenbild")!==false){
 				$bildaenderung[] = $data[$i]["name"];
+			}elseif (strpos($data[$i]["name"], "Betreff")!==false){
+				$betreffaenderung[] = $data[$i]["name"];
 			}else{
 				unset($buffer[1]);
 				$buffer = implode(": ", $buffer);
@@ -39,7 +42,7 @@ if(isset($_REQUEST["file"])){
 					$count[$data[$i]["name"]] = $count[$data[$i]["name"]] + 1;
 				}
 			}
-	    }else{
+	    }elseif($i > 0){
 	    	$data[$i]["message"].= "<br />".$line;
 	    }
 	}
