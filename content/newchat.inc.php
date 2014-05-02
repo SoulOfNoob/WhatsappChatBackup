@@ -59,10 +59,7 @@ if(isset($_REQUEST["file"])){
 	    	$i++;
 	    	//echo "success parsing time: '".$checkline."' at line: '".$linecount."' in line: ".$i."<br />";
 	    	$buffer = explode(": ", $line);
-		    $datetime = explode(" ", $buffer[0]);
-	    	$data[$i]["date"] = $datetime[0];
-		    $data[$i]["time"] = $datetime[1];
-		    unset($datetime);
+			$data[$i]["datetime"] = DateTime::createFromFormat('d.m.Y G:i:s', $checkline);
 		    unset($buffer[0]);
 		    $data[$i]["name"] = $buffer[1];
 			unset($buffer[1]);
@@ -81,6 +78,7 @@ if(isset($_REQUEST["file"])){
 	$beigetreten = array();
 	$verlassen = array();
 	$entfernt = array();
+	$bildaenderung = array();
 	$tablestring = "<table border=\"1\">";
 	$tablestring.= "<tr><th>am</th><th>um</th><th>wer</th><th>was</th></tr>";
 	foreach($data as $line){
@@ -93,7 +91,7 @@ if(isset($_REQUEST["file"])){
 		}elseif (strpos($line["name"], "‬Gruppenbild")!==false){
 			$bildaenderung[] = $line["name"];
 		}else{
-			$tablestring.= "<tr><td>".$line["date"]."</td><td>".$line["time"]."</td><td>".$line["name"]."</td><td>".$line["message"]."</td><tr>";
+			$tablestring.= "<tr><td>".$data[4]["datetime"]->format('d.m')."</td><td>".$data[4]["datetime"]->format('H:i')."</td><td>".$line["name"]."</td><td>".$line["message"]."</td><tr>";
 			if(!in_array ($line["name"], $names)){
 				$names[] = $line["name"];
 				$count[$line["name"]] = 1;

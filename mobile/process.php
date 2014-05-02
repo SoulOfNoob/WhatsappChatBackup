@@ -13,22 +13,20 @@ if(isset($_REQUEST["file"])){
 	    if (DateTime::createFromFormat('d.m.Y G:i:s', $checkline) !== FALSE){
 	    	$i++;
 	    	$buffer = explode(": ", $line);
-		    //################################## timesplit
 		    $data[$i]["datetime"] = DateTime::createFromFormat('d.m.Y G:i:s', $checkline);
-			//################################## timesplit
-		    unset($datetime);
 		    unset($buffer[0]);
 		    $data[$i]["name"] = $buffer[1];
 			unset($buffer[1]);
 			$buffer = implode(": ", $buffer);
 		    $data[$i]["message"] = $buffer;
-
+			/*
 		    if(!in_array ($data[$i]["name"], $names)){
 				$names[] = $data[$i]["name"];
 				$count[$data[$i]["name"]] = 1;
 			}elseif(in_array ($data[$i]["name"], $names)){
 				$count[$data[$i]["name"]] = $count[$data[$i]["name"]] + 1;
 			}
+			*/
 	    }else{
 	    	$data[$i]["message"].= "<br />".$line;
 	    }
@@ -36,8 +34,9 @@ if(isset($_REQUEST["file"])){
 	$beigetreten = array();
 	$verlassen = array();
 	$entfernt = array();
+	$bildaenderung = array();
 	//$tablestring = '<table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">';
-	$tablestring.= '<thead> <tr class="ui-bar-d"> <th data-priority="2">Datum</th> <th data-priority="1">Zeit</th> <th data-priority="1">Verfasser</th> <th data-priority="1">Nachricht</abbr></th> </tr> </thead>';
+	$tablestring = '<thead> <tr class="ui-bar-d"> <th data-priority="2">Datum</th> <th data-priority="1">Zeit</th> <th data-priority="1">Verfasser</th> <th data-priority="1">Nachricht</abbr></th> </tr> </thead>';
 	$tablestring.= '<tbody>';
 	foreach($data as $line){
 		if (strpos($line["name"], "beigetreten")!==false){

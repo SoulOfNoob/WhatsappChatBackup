@@ -39,11 +39,40 @@
        		var chat = "fehler";
 			console.log("filename: "+filename);
 			$.ajax({
-				url: "process.php",
+				url: "processjson.php",
 				data: { file: filename },
-				type: "GET",
-				success: function(response) { chat = response; }
-			}).done(function() {					
+				type: "POST",
+				success: function(response) { chat = jQuery.parseJSON(response); }
+			}).done(function() {	
+				console.log(chat);
+				var table = '<table data-role="table" id="chattable" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">';
+				table = table + '<thead> <tr class="ui-bar-d"> <th data-priority="2">Datum</th> <th data-priority="1">Zeit</th> <th data-priority="1">Verfasser</th> <th data-priority="1">Nachricht</abbr></th> </tr> </thead>';
+				table = table + '<tbody>';
+					console.log(chat[1].datetime);
+					ds = chat[1].datetime; //29.03.14 22:20:18 
+					var first_part = ds.split(" ")[0],
+					day = first_part.split(".")[0],
+					month = first_part.split(".")[1],
+					year = "20"+first_part.split(".")[2],
+					last_part = ds.split(" ")[1],
+					hour = last_part.split(":")[0],
+					minute =  last_part.split(":")[1],
+					second =  last_part.split(":")[2];
+					console.log(day+' '+month+' '+year+' '+hour+' '+minute+' '+second);
+					var date = new Date ( Date.UTC ( year, month, day, hour, minute, second ) );
+					console.log(date);
+					//table = table + '<tr class=\"custom_row\"><td>'/*["datetime"]->format('d.m')*/+'</td><td>'/*$data[4]["datetime"]->format('H:i')*/+'</td><td nowrap>'+chat[i].name+'</td><td>'+chat[i].message+'</td><tr>';
+				
+				table = table + '</tbody>';
+				//$tablestring = '				//$tablestring.= '';
+				//foreach($data as $line){
+				//	$tablestring.= "";
+				//	
+				//}
+				//$tablestring.= "";
+				
+				
+				/*
 				var table = '';
 				table = table+'<table data-role="table" id="chattable" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">';
 				table = table+chat;
@@ -53,6 +82,7 @@
 				$("#chattable").html(table);
 				$("#chattable").trigger("create");
 				$.mobile.navigate( "#view" );
+				*/
 			});
         }
         $( document ).ready(function() {
