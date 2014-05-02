@@ -1,13 +1,13 @@
 <?php
-date_default_timezone_set("Europe/Berlin");
-$names = array();
-$count = array();
-$beigetreten = array();
-$verlassen = array();
-$entfernt = array();
-$bildaenderung = array();
-$betreffaenderung = array();
 if(isset($_REQUEST["file"])){
+	date_default_timezone_set("Europe/Berlin");
+	$names = array();
+	$count = array();
+	$beigetreten = array();
+	$verlassen = array();
+	$entfernt = array();
+	$bildaenderung = array();
+	$betreffaenderung = array();
 	$handle = @fopen("txts/".$_REQUEST["file"], "r"); //read line one by one
 	$data = array();
 	    $i = 0;
@@ -23,14 +23,24 @@ if(isset($_REQUEST["file"])){
 		    $data[$i]["name"] = $buffer[1];
 			if (strpos($data[$i]["name"], "beigetreten")!==false){
 				$beigetreten[] = $data[$i]["name"];
+				unset($data[$i]["name"]);
+				$i--;
 			}elseif (strpos($data[$i]["name"], "Gruppe verlassen")!==false){
 				$verlassen[] = $data[$i]["name"];
+				unset($data[$i]["name"]);
+				$i--;
 			}elseif (strpos($data[$i]["name"], "‬entfernt")!==false){
 				$entfernt[] = $data[$i]["name"];
+				unset($data[$i]["name"]);
+				$i--;
 			}elseif (strpos($data[$i]["name"], "‬Gruppenbild")!==false){
 				$bildaenderung[] = $data[$i]["name"];
+				unset($data[$i]["name"]);
+				$i--;
 			}elseif (strpos($data[$i]["name"], "Betreff")!==false){
 				$betreffaenderung[] = $data[$i]["name"];
+				unset($data[$i]["name"]);
+				$i--;
 			}else{
 				unset($buffer[1]);
 				$buffer = implode(": ", $buffer);
@@ -46,17 +56,17 @@ if(isset($_REQUEST["file"])){
 	    	$data[$i]["message"].= "<br />".$line;
 	    }
 	}
-
-	//$tablestring = '<table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">';
-	//$tablestring = '<thead> <tr class="ui-bar-d"> <th data-priority="2">Datum</th> <th data-priority="1">Zeit</th> <th data-priority="1">Verfasser</th> <th data-priority="1">Nachricht</abbr></th> </tr> </thead>';
-	//$tablestring.= '<tbody>';
-	//foreach($data as $line){
-	//	$tablestring.= "<tr class=\"custom_row\"><td>".$data[4]["datetime"]->format('d.m')."</td><td>".$data[4]["datetime"]->format('H:i')."</td><td nowrap>".$line["name"]."</td><td>".$line["message"]."</td><tr>";
-	//	
-	//}
-	//$tablestring.= "</tbody>";
-
-	//echo $tablestring;
 	echo json_encode($data);
 }
+/*if ($_FILES['chatfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['chatfile']['tmp_name'])) { //checks that file is uploaded
+	$path = "txts/".$_FILES['chatfile']['name'];
+	echo $path;
+	if (!file_exists($path)){
+		if (!move_uploaded_file($_FILES['chatfile']['tmp_name'], $path)){
+		    die('Datei wurde nicht Erfolgreich hochgeladen');
+		}
+	}else{
+		echo "Datei vorhanden: <br />";
+	}
+}*/
 ?>
